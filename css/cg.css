@@ -1,0 +1,154 @@
+/*
+
+    TEMPLATE BASIC CSS
+    by Mauro Rebuffo
+    https://mehir.ar
+    https://github.com/rrebuffo
+
+*/
+
+
+html,
+body
+{
+    background-color: transparent;
+    overflow: hidden;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+*,
+*:before,
+*:after
+{
+    box-sizing: inherit;
+}
+
+#mainlayout
+{
+    position: absolute;
+    display: flex;
+    overflow: hidden;
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    flex-direction: row;
+}
+
+.TL, .CL, .BL { justify-content: flex-start; }
+.TC, .CC, .BC { justify-content: center; }
+.TR, .CR, .BR { justify-content: flex-end; }
+.TL, .TC, .TR { align-items: flex-start; }
+.CL, .CC, .CR { align-items: center; }
+.BL, .BC, .BR { align-items: flex-end; }
+
+#container
+{
+    position: relative;
+    overflow: visible;
+    opacity: 0;
+}
+
+.CC #container
+{
+    transform: translateX(50%);
+}
+
+.video
+{
+    position: absolute;
+    left: 0;
+    top: 0;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.textcontainer
+{
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    position:absolute;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    word-wrap: normal;
+    white-space: nowrap;
+    margin: 0;
+    padding: 0;
+}
+
+.textcontainer .scale
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+}
+
+.textcontainer .scale
+{
+}
+
+.text
+{
+    width: auto;
+    display: inline-block;
+    font-weight: bold;
+    position: relative;
+    left: 0;
+    font-size: 4.5vh;
+    color: #FFF;
+    line-break:strict;
+    text-transform: uppercase;
+    white-space: nowrap;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    font-family: 'text1_font';
+}
+
+.text > span
+{
+    display: block;
+}
+
+.text > span > span
+{
+    display: inline-block;
+}
+
+.text > span > span > span
+{
+    display: inline-block;
+}
+
+#container
+{
+    opacity: 0;
+}
+
+
+
+body.boundings .textcontainer .scale
+{
+    box-shadow: inset 0px 0px 0px 0.20833vw rgba(64,200,0,1);
+}
+
+body.boundings .video
+{
+    box-shadow: inset 0px 0px 0px 0.20833vw rgba(200,64,0,1);
+}
+
+body.boundings #container
+{
+    box-shadow: inset 0px 0px 0px 0.20833vw rgba(0,64,200,1);
+}

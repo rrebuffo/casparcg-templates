@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Loop In-Out (One line)</title>
+    <link rel="stylesheet" href="../css/cg.css">
+    <style type="text/css">
+
+    @font-face
+    {
+        font-family: "color-emoji";
+        src: url('../font/NotoColorEmoji.ttf');
+    }
+
+    </style>
+</head>
+<body>
+    <div id="mainlayout">
+        <div id="container"></div>
+    </div>
+    <script type="text/javascript" src="../js/jquery-latest.min.js"></script>
+    <script type="text/javascript" src="../js/jquery.lettering.min.js"></script>
+    <script type="text/javascript" src="../js/gsap.min.js"></script>
+    <script type="text/javascript" src="../js/helpers.js"></script>
+    <script type="text/javascript" src="../js/caspar.js"></script>
+    <script>
+
+        // ELEMENTS
+        let _container = document.getElementById('container');
+
+        // ANIMATION OBJECTS
+        let ot;
+        let tt;
+        let bt;
+
+        // TEMPLATE ELEMENTS
+        texts.push(new TextBlock("text1"));
+        loops.push(new VideoLoop("bg"));
+
+        // PLAYOUT FUNCTIONS
+
+        function play ()
+        {
+            if(preview_mode) return;
+            if(!tpl_init)
+            {
+                playAfterLoad = true;
+                return;
+            }
+            _container.style.opacity = 1;
+            texts.forEach((text) => { text.play(); });
+        }
+
+        function stop ()
+        {
+            if(preview_mode) return;
+            loops.forEach((loop) => { stopLoop(loop); });
+            texts.forEach((text) => { text.stop(); });
+        }
+
+        function next ()
+        {
+
+        }
+
+        function preview ()
+        {
+            loops.forEach((loop) => {
+                loop.element.style.opacity = 1;
+                loop.element.currentTime = loop.loop_in;
+            });
+            _container.style.opacity = 1;
+            texts.forEach((text) => {
+                text.element.opacity = 1;
+            });
+        }
+
+
+        // CONTENT BEHAVIOR
+
+        function initElements()
+        {
+            loadFonts();
+        }
+
+        function loadFonts()
+        {
+            for(f=0;f<texts.length;f++)
+            {
+                var family = 'font_'+(f+1);
+                texts[f].fontFace = new FontFace(family, "url('" + font_path + texts[f].font + ".ttf'), url('" + font_path + texts[f].font + ".otf')", {});
+                texts[f].fontFamily = family+", color-emoji"
+                document.fonts.add(texts[f].fontFace);
+                texts[f].fontFace.load();
+            }
+            document.fonts.ready.then(continueInit);
+        }
+
+        function continueInit()
+        {
+            loops.forEach(loop => loop.setup());
+            texts.forEach(text => text.setup());
+            if(preview_mode) preview();
+            else setupLoops();
+            postData();
+        }
+
+        function textChanged(text)
+        {
+            text.set(!preview_mode);
+            text.changed = false;
+            if(fcu)
+            {
+                gsap.fromTo(text.container,{opacity:1},{opacity:0,duration:.1, ease:"power1.in",delay:.05, onComplete: () => { text.revert(); } });
+                gsap.fromTo(text.altcontainer,{opacity:0},{opacity:1, duration:.1, ease:"power1.out"});
+            }
+            else
+            {
+                text.stop(true);
+                text.play(true);
+            }
+        }
+
+
+        // DATA PARSER
+        
+        function update (data) 
+        {
+            getData(data);
+            
+            for (let i in Object.keys(jsdata))
+            {
+                var _param = Object.keys(jsdata)[i];
+                var _value = Object.values(jsdata)[i];
+                checkTemplateParam(_param,_value,lout,["#container"]);
+                checkTextParam(_param,_value);
+                checkLoopParam(_param,_value);
+
+                switch(_param)
+                {
+                    case "width":
+                        _container.style.width = getWidth(_value);
+                        break;
+                    case "height":
+                        _container.style.height = getHeight(_value);
+                        break;
+                }
+            }
+            if(tpl_init)
+            {
+                texts.forEach((text) => {
+                    if(text.changed)
+                    {
+                        if(preview_mode) text.set(false);
+                        else textChanged(text);
+                    }
+                });
+            }
+            else
+            {
+                initElements();
+            }
+
+        }
+
+        //#endregion
+
+    </script>
+</body>
+</html>
