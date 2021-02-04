@@ -54,7 +54,7 @@
         function stop ()
         {
             if(preview_mode) return;
-            loops.forEach((loop) => { stopLoop(loop); });
+            loops.forEach((loop) => { loop.stop(); });
             texts.forEach((text) => { text.stop(); });
         }
 

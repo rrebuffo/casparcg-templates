@@ -389,13 +389,6 @@ function setupLoops()
     window.requestAnimationFrame(updateLoops);
 }
 
-function stopLoop(loop)
-{
-    loop.outro = true;
-    gsap.fromTo(loop.element,{opacity:1},{opacity:0,duration:.2, ease:"power1.in",delay:.1});
-    gsap.fromTo(loop.altelement,{opacity:0},{opacity:1, duration:.2, ease:"power1.out"});
-}
-
 //#endregion
 
 class TextBlock
