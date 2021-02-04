@@ -17,10 +17,10 @@ let jsdata;
 let offset = 0;
 let margin = 0;
 let height = 0;
-let offset_top = 5;
-let offset_bottom = 5;
-let offset_left = 5;
-let offset_right = 5;
+let offset_top = 54;
+let offset_bottom = 54;
+let offset_left = 96;
+let offset_right = 96;
 
 // STATUS VARIABLES
 let preview_mode = false;
