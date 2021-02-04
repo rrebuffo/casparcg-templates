@@ -187,11 +187,15 @@ function loadFonts()
 {
     for(f=0;f<texts.length;f++)
     {
-        var family = 'font_'+(f+1);
-        texts[f].fontFace = new FontFace(family, "url('" + font_path + texts[f].font + ".ttf'), url('" + font_path + texts[f].font + ".otf')", {});
+        var family = 'sans-serif';
+        if(texts[f].font != "")
+        {
+            family = 'font_'+(f+1);
+            texts[f].fontFace = new FontFace(family, "url('" + font_path + texts[f].font + ".ttf'), url('" + font_path + texts[f].font + ".otf')", {});
+            document.fonts.add(texts[f].fontFace);
+            texts[f].fontFace.load();
+        }
         texts[f].fontFamily = family+", color-emoji"
-        document.fonts.add(texts[f].fontFace);
-        texts[f].fontFace.load();
     }
     document.fonts.ready.then(continueInit);
 }
