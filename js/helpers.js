@@ -119,12 +119,97 @@ function getAlign(align)
     }
 }
 
+function playElements()
+{
+    if(preview_mode) return;
+    if(!tpl_init)
+    {
+        playAfterLoad = true;
+        return;
+    }
+    changeClassProperty(".container","opacity",1);
+    setupLoops();
+    texts.forEach((text) => { text.play(); });
+}
+
+function stopElements()
+{
+    if(preview_mode) return;
+    loops.forEach((loop) => { loop.stop(); });
+    texts.forEach((text) => { text.stop(); });
+}
+
+function checkTextChange()
+{
+    texts.forEach((text) => {
+        if(text.changed)
+        {
+            if(preview_mode) text.set(false);
+            else textChanged(text);
+        }
+    });
+}
+
+function textChanged(text)
+{
+    text.set(!preview_mode);
+    text.changed = false;
+    if(fcu)
+    {
+        gsap.fromTo(text.container,{opacity:1},{opacity:0,duration:.1, ease:"power1.in",delay:.05, onComplete: () => { text.revert(); } });
+        gsap.fromTo(text.altcontainer,{opacity:0},{opacity:1, duration:.1, ease:"power1.out"});
+    }
+    else
+    {
+        text.stop(true);
+        text.play(true);
+    }
+}
+
+function preview ()
+{
+    loops.forEach((loop) => {
+        loop.element.style.opacity = 1;
+        loop.element.currentTime = loop.loop_in;
+    });
+    changeClassProperty(".container","opacity",1);
+    texts.forEach((text) => {
+        text.element.opacity = 1;
+    });
+}
+
+function initElements()
+{
+    loadFonts();
+}
+
+function loadFonts()
+{
+    for(f=0;f<texts.length;f++)
+    {
+        var family = 'font_'+(f+1);
+        texts[f].fontFace = new FontFace(family, "url('" + font_path + texts[f].font + ".ttf'), url('" + font_path + texts[f].font + ".otf')", {});
+        texts[f].fontFamily = family+", color-emoji"
+        document.fonts.add(texts[f].fontFace);
+        texts[f].fontFace.load();
+    }
+    document.fonts.ready.then(continueInit);
+}
+
+function continueInit()
+{
+    loops.forEach(loop => loop.setup());
+    texts.forEach(text => text.setup());
+    if(preview_mode) preview();
+    postData();
+}
+
 function postData()
 {
     tpl_init = true;
     if(position == "BL" || position == "BC" || position == "BR") gsap.set(elements,{css:{marginBottom:getHeight(offset)}});
     if(preview_mode) document.body.className = boundings ? "boundings" : "";
-    if(playAfterLoad) play();
+    if(playAfterLoad) playElements();
 }
 
 function getData(data)

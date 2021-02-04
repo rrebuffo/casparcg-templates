@@ -8,6 +8,12 @@
 */
 
 
+@font-face
+{
+    font-family: "color-emoji";
+    src: url('../font/NotoColorEmoji.ttf');
+}
+
 html,
 body
 {
@@ -44,14 +50,14 @@ body
 .CL, .CC, .CR { align-items: center; }
 .BL, .BC, .BR { align-items: flex-end; }
 
-#container
+.container
 {
     position: relative;
     overflow: visible;
     opacity: 0;
 }
 
-.CC #container
+.CC .container
 {
     transform: translateX(50%);
 }
@@ -92,10 +98,6 @@ body
     width: 100%;
     height: 100%;
     overflow: visible;
-}
-
-.textcontainer .scale
-{
 }
 
 .text
@@ -148,7 +150,7 @@ body.boundings .video
     box-shadow: inset 0px 0px 0px 0.20833vw rgba(200,64,0,1);
 }
 
-body.boundings #container
+body.boundings .container
 {
     box-shadow: inset 0px 0px 0px 0.20833vw rgba(0,64,200,1);
 }

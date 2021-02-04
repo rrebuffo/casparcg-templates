@@ -4,19 +4,10 @@
     <meta charset="utf-8" />
     <title>Loop In-Out (One line)</title>
     <link rel="stylesheet" href="../css/cg.css">
-    <style type="text/css">
-
-    @font-face
-    {
-        font-family: "color-emoji";
-        src: url('../font/NotoColorEmoji.ttf');
-    }
-
-    </style>
 </head>
 <body>
     <div id="mainlayout">
-        <div id="container"></div>
+        <div id="container" class="container"></div>
     </div>
     <script type="text/javascript" src="../js/jquery-latest.min.js"></script>
     <script type="text/javascript" src="../js/jquery.lettering.min.js"></script>
@@ -34,86 +25,18 @@
 
         function play ()
         {
-            if(preview_mode) return;
-            if(!tpl_init)
-            {
-                playAfterLoad = true;
-                return;
-            }
-            _container.style.opacity = 1;
-            texts.forEach((text) => { text.play(); });
+            playElements();
         }
 
         function stop ()
         {
-            if(preview_mode) return;
-            loops.forEach((loop) => { loop.stop(); });
-            texts.forEach((text) => { text.stop(); });
+            stopElements();
         }
 
         function next ()
         {
 
         }
-
-        function preview ()
-        {
-            loops.forEach((loop) => {
-                loop.element.style.opacity = 1;
-                loop.element.currentTime = loop.loop_in;
-            });
-            _container.style.opacity = 1;
-            texts.forEach((text) => {
-                text.element.opacity = 1;
-            });
-        }
-
-
-        // CONTENT BEHAVIOR
-
-        function initElements()
-        {
-            loadFonts();
-        }
-
-        function loadFonts()
-        {
-            for(f=0;f<texts.length;f++)
-            {
-                var family = 'font_'+(f+1);
-                texts[f].fontFace = new FontFace(family, "url('" + font_path + texts[f].font + ".ttf'), url('" + font_path + texts[f].font + ".otf')", {});
-                texts[f].fontFamily = family+", color-emoji"
-                document.fonts.add(texts[f].fontFace);
-                texts[f].fontFace.load();
-            }
-            document.fonts.ready.then(continueInit);
-        }
-
-        function continueInit()
-        {
-            loops.forEach(loop => loop.setup());
-            texts.forEach(text => text.setup());
-            if(preview_mode) preview();
-            else setupLoops();
-            postData();
-        }
-
-        function textChanged(text)
-        {
-            text.set(!preview_mode);
-            text.changed = false;
-            if(fcu)
-            {
-                gsap.fromTo(text.container,{opacity:1},{opacity:0,duration:.1, ease:"power1.in",delay:.05, onComplete: () => { text.revert(); } });
-                gsap.fromTo(text.altcontainer,{opacity:0},{opacity:1, duration:.1, ease:"power1.out"});
-            }
-            else
-            {
-                text.stop(true);
-                text.play(true);
-            }
-        }
-
 
         // DATA PARSER
         
@@ -141,13 +64,7 @@
             }
             if(tpl_init)
             {
-                texts.forEach((text) => {
-                    if(text.changed)
-                    {
-                        if(preview_mode) text.set(false);
-                        else textChanged(text);
-                    }
-                });
+                checkTextChange();
             }
             else
             {
@@ -155,8 +72,6 @@
             }
 
         }
-
-        //#endregion
 
     </script>
 </body>
