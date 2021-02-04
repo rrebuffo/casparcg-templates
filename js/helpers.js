@@ -393,8 +393,9 @@ function setupLoops()
 
 class TextBlock
 {
-    constructor(prefix = "text")
+    constructor(prefix, parent)
     {
+        this.parent = parent;
         this.prefix = prefix;
         this.container = null;
         this.altcontainer = null;
@@ -456,8 +457,8 @@ class TextBlock
         ts.appendChild(te);
         as.appendChild(ae);
 
-        _container.appendChild(c);
-        _container.appendChild(a);
+        this.parent.appendChild(c);
+        this.parent.appendChild(a);
 
         this.set();
         this.set(true);
@@ -755,8 +756,9 @@ class TextBlock
 
 class VideoLoop
 {
-    constructor(prefix = "loop")
+    constructor(prefix, parent)
     {
+        this.parent = parent;
         this.prefix = prefix;
         this.element = null;
         this.altelement = null;
@@ -783,8 +785,8 @@ class VideoLoop
         v.style.height = a.style.height = "100%";
         a.style.opacity = 0;
 
-        _container.appendChild(v);
-        _container.appendChild(a);
+        this.parent.appendChild(v);
+        this.parent.appendChild(a);
     }
 
     stop()

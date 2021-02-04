@@ -26,16 +26,9 @@
 
         // ELEMENTS
         let _container = document.getElementById('container');
-
-        // ANIMATION OBJECTS
-        let ot;
-        let tt;
-        let bt;
-
-        // TEMPLATE ELEMENTS
-        texts.push(new TextBlock("text1"));
-        texts.push(new TextBlock("text2"));
-        loops.push(new VideoLoop("bg"));
+        texts.push(new TextBlock("text1", _container));
+        texts.push(new TextBlock("text2", _container));
+        loops.push(new VideoLoop("bg", _container));
 
 
         // PLAYOUT FUNCTIONS
