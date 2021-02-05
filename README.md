@@ -133,7 +133,7 @@ These affect the overall look and behavior of the template:
 Parameter | Value | Result
 ----------------- | ------------------ | -------------------------------------
 tpreview | `*` | Disables all transitions and updates the elements instantly
-showboundings | `true` | Shows bounding boxes on elements to help layout sizing visually
+showboundings | `true` | Shows bounding boxes on elements to help layout sizing visually (only works in preview mode)
 fcu | `*` | Forces text content to update silently (fade) instead of a out-in transition
 position | `[TL/TC/TR/CL/CC/CR/BL/BC/BR]` | Anchor position for the `.container`s
 media_path | `string` | base path for the video elements
@@ -145,10 +145,10 @@ The layout has a safe margin by default and its children (of `container` class) 
 Parameter | Default value | Result
 ----------------- | ------------------ | -------------------------------------
 offset | `0` | Margin between the bottom of the screen (to avoid multiple templates overlapping)
-offset_top | `5` | Top safe margin
-offset_bottom | `5` | Bottom safe margin
-offset_left | `5` | Left safe margin
-offset_right | `5` | Right safe margin
+offset_top | `54` | Top safe margin
+offset_bottom | `54` | Bottom safe margin
+offset_left | `96` | Left safe margin
+offset_right | `96` | Right safe margin
 
 All the parameters accept only pixel units based on a 1920x1080px and get scaled automatically to the current size of the template.
 
